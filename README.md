@@ -63,23 +63,17 @@
 ## About The Project
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/divyajeetswami5-tech/portfolio/main/assets/screenshot-hero.png" alt="Hero Section" width="100%">
+  <img src="assets/screenshot-hero.png" alt="Portfolio hero section" width="100%">
 </div>
 
-There are many great portfolio templates available on GitHub; however, I didn't find one that combined editorial design with modern interactivity. So I created this — a portfolio that looks designed, not generated.
+A modern, interactive personal portfolio designed to feel curated rather than templated. Built on a warm editorial palette with a serif display face, an animated cosmic background, and a constellation of orbiting tool spheres that reveal their role in my workflow on hover.
 
 **Why this portfolio?**
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others.
-* You shouldn't be doing the same tasks over and over like creating a README from scratch.
-* You should implement DRY principles to the rest of your life.
 
-Here's what makes this portfolio special:
-* **Editorial design** — Warm carbon + cream palette with saffron accents, using a serif display font for headlines.
-* **Interactive toolkit** — Orbiting spheres representing each tool I use, with hover-to-reveal details.
-* **Cosmic background** — Animated star field with auroras that react to scroll and mouse movement.
-* **Cinematic projects** — Horizontal scroll showcase inspired by Active Theory's portfolio style.
-* **Fully responsive** — Works beautifully on mobile, tablet, and desktop.
-* **ATS-friendly** — Semantic HTML, proper headings, ARIA labels, and real text content.
+* Looks designed, not generated. Editorial palette and typography choices avoid the "AI default" look.
+* Real interactivity. Particles you can push, spheres that respond to focus, and a cinematic horizontal projects scroll inspired by [activetheory.net](https://activetheory.net).
+* Zero build step. Static HTML, CSS, and JavaScript. Open `index.html` and it runs.
+* Accessible by default. Semantic markup, ARIA labels, keyboard nav, skip link, and `prefers-reduced-motion` respected.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,6 +104,69 @@ This section should list any major frameworks/libraries used to bootstrap your p
 - **Skill Bars** — Progress bars animate on scroll.
 - **Project Filter** — Filter projects by category (Data Science, Web, Application).
 - **Contact Form** — Client-side validation that opens your email client with pre-filled content.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Preview
+
+A walkthrough of each section.
+
+<table>
+  <tr>
+    <td align="center"><strong>Hero</strong></td>
+    <td align="center"><strong>About</strong></td>
+  </tr>
+  <tr>
+    <td><img src="assets/hero-desktop.png" alt="Hero" width="100%"></td>
+    <td><img src="assets/about-desktop.png" alt="About" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Skills</strong></td>
+    <td align="center"><strong>Toolkit (idle)</strong></td>
+  </tr>
+  <tr>
+    <td><img src="assets/skills-desktop.png" alt="Skills" width="100%"></td>
+    <td><img src="assets/toolkit-desktop.png" alt="Toolkit constellation" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Toolkit (hover)</strong></td>
+    <td align="center"><strong>Projects</strong></td>
+  </tr>
+  <tr>
+    <td><img src="assets/toolkit-hover-desktop.png" alt="Toolkit hover state revealing tool details" width="100%"></td>
+    <td><img src="assets/projects-desktop.png" alt="Cinematic projects showcase" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Education</strong></td>
+    <td align="center"><strong>Contact</strong></td>
+  </tr>
+  <tr>
+    <td><img src="assets/education-desktop.png" alt="Education timeline" width="100%"></td>
+    <td><img src="assets/contact-desktop.png" alt="Contact form" width="100%"></td>
+  </tr>
+</table>
+
+### Responsive
+
+Audited at 1440 / 834 / 393 widths with no horizontal overflow at any breakpoint.
+
+<table>
+  <tr>
+    <td align="center" width="34%"><strong>Mobile (393px)</strong></td>
+    <td align="center" width="33%"><strong>Tablet (834px)</strong></td>
+    <td align="center" width="33%"><strong>Desktop (1440px)</strong></td>
+  </tr>
+  <tr>
+    <td><img src="assets/hero-mobile.png" alt="Hero on mobile" width="100%"></td>
+    <td><img src="assets/hero-tablet.png" alt="Hero on tablet" width="100%"></td>
+    <td><img src="assets/hero-desktop.png" alt="Hero on desktop" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="assets/toolkit-mobile.png" alt="Toolkit on mobile" width="100%"></td>
+    <td><img src="assets/toolkit-tablet.png" alt="Toolkit on tablet" width="100%"></td>
+    <td><img src="assets/toolkit-desktop.png" alt="Toolkit on desktop" width="100%"></td>
+  </tr>
+</table>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

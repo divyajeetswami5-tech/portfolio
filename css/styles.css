@@ -1368,6 +1368,10 @@ a.contact-item:hover {
    ========================================================= */
 
 @media (max-width: 1024px) {
+  .nav__links { display: none; }
+  .menu-toggle { display: inline-flex; }
+  .nav__cta { display: none; }
+
   .hero__inner,
   .about__grid,
   .education__grid,
@@ -1381,11 +1385,10 @@ a.contact-item:hover {
 }
 
 @media (max-width: 768px) {
-  .nav__links { display: none; }
-  .menu-toggle { display: inline-flex; }
-  .nav__cta { display: none; }
-
-  .hero { padding-top: var(--nav-h); padding-bottom: 40px; }
+  .hero { padding-top: var(--nav-h); padding-bottom: 40px; min-height: auto; }
+  .hero__inner { padding-top: 24px; gap: 32px; }
+  .hero__visual { order: -1; }
+  .profile-card { max-width: 320px; }
   .hero__cta { gap: 8px; }
   .btn { padding: 12px 20px; font-size: 0.9rem; }
 

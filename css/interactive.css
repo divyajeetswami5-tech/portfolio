@@ -115,6 +115,7 @@ main, .footer { position: relative; z-index: 1; }
    ========================================================= */
 .toolkit {
   padding: 130px 0;
+  overflow: hidden; /* contain sphere glow halos at edges */
 }
 
 .orbit {
@@ -427,10 +428,9 @@ main, .footer { position: relative; z-index: 1; }
   .orbit {
     aspect-ratio: auto;
     max-width: 100%;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: auto;
     gap: 14px;
-    perspective: none;
     place-items: stretch;
   }
   .orbit::before, .orbit::after { display: none; }
@@ -439,7 +439,7 @@ main, .footer { position: relative; z-index: 1; }
     position: relative;
     width: 100%;
     max-width: 100%;
-    grid-column: span 4;
+    grid-column: 1 / -1;
     margin-top: 18px;
     transform: none;
   }
@@ -449,26 +449,38 @@ main, .footer { position: relative; z-index: 1; }
     left: auto !important;
     width: 100%;
     height: auto;
+    min-width: 0;
     aspect-ratio: 1 / 1;
     transform: none !important;
-    animation: none;
   }
   .sphere:hover,
   .sphere:focus-visible,
   .sphere.is-active {
     transform: scale(1.06) !important;
   }
+  .sphere i { font-size: 1.4rem; }
   .sphere__name {
     bottom: 6px;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.2px;
     opacity: 0.85;
+    white-space: nowrap;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sphere__glow { inset: -10%; filter: blur(10px); }
+  .orbit.has-active .sphere:not(.is-active) {
+    filter: brightness(0.55) saturate(0.7);
+    transform: scale(0.95) !important;
   }
 }
 
 @media (max-width: 480px) {
-  .orbit { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .detail { grid-column: span 3; }
-  .sphere i { font-size: 1.4rem; }
+  .orbit { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .detail { grid-column: 1 / -1; }
+  .sphere i { font-size: 1.2rem; }
+  .sphere__name { font-size: 0.55rem; }
 }
 
 /* =========================================================
