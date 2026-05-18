@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Divyajeet Swami - IT Engineer specializing in Data Science, AI/ML, and Web Development. Explore projects, skills, and experience." />
+  <meta name="keywords" content="Divyajeet Swami, IT Engineer, Data Science, Machine Learning, Web Developer, Python, Portfolio, Jaipur" />
+  <meta name="author" content="Divyajeet Swami" />
+  <meta name="theme-color" content="#0e0d0b" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Divyajeet Swami | IT Engineer & Data Science Enthusiast" />
+  <meta property="og:description" content="Portfolio showcasing projects in data science, AI/ML, and modern web development." />
+  <meta property="og:type" content="website" />
+
+  <title>Divyajeet Swami | IT Engineer &amp; Data Science Enthusiast</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/interactive.css" />
+</head>
+<body>
+  <!-- Skip link for accessibility -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Cosmic background that reacts to scroll + mouse -->
+  <div class="cosmos" aria-hidden="true">
+    <canvas class="cosmos__stars" id="cosmosStars"></canvas>
+    <div class="cosmos__aurora cosmos__aurora--1"></div>
+    <div class="cosmos__aurora cosmos__aurora--2"></div>
+    <div class="cosmos__aurora cosmos__aurora--3"></div>
+    <div class="cosmos__noise"></div>
+  </div>
+
+  <!-- Scroll progress indicator -->
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar"></div></div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#home" class="nav__brand" aria-label="Divyajeet Swami - Home">
+        <span class="nav__brand-mark">DS</span>
+        <span class="nav__brand-text">Divyajeet<span class="dot">.</span></span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <ul>
+          <li><a href="#home" class="nav__link active">Home</a></li>
+          <li><a href="#about" class="nav__link">About</a></li>
+          <li><a href="#skills" class="nav__link">Skills</a></li>
+          <li><a href="#toolkit" class="nav__link">Toolkit</a></li>
+          <li><a href="#projects" class="nav__link">Projects</a></li>
+          <li><a href="#education" class="nav__link">Education</a></li>
+          <li><a href="#contact" class="nav__link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle theme">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i>
+        </button>
+        <a href="#contact" class="btn btn--primary btn--sm nav__cta">Hire Me</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#toolkit">Toolkit</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="hero__bg" aria-hidden="true">
+        <canvas class="hero__particles" id="heroParticles"></canvas>
+        <div class="hero__grid"></div>
+        <div class="hero__glow hero__glow--1"></div>
+        <div class="hero__glow hero__glow--2"></div>
+      </div>
+
+      <div class="container hero__inner">
+        <div class="hero__content reveal">
+          <p class="hero__greeting"><span class="dot-pulse"></span> Available for opportunities</p>
+          <h1 class="hero__title">
+            Hi, I'm <span class="text-gradient">Divyajeet Swami</span>
+          </h1>
+          <h2 class="hero__subtitle">
+            <span class="typed" id="typed" aria-live="polite"></span><span class="caret">|</span>
+          </h2>
+          <p class="hero__desc">
+            High-performing IT undergraduate with strong foundations in Python, web development, Linux administration, and machine learning. I build production-oriented solutions in data analysis, predictive modeling, and responsive interfaces.
+          </p>
+
+          <div class="hero__cta">
+            <a href="#projects" class="btn btn--primary">
+              <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+              View My Work
+            </a>
+            <a href="#contact" class="btn btn--ghost">
+              <i class="fa-regular fa-paper-plane" aria-hidden="true"></i>
+              Get In Touch
+            </a>
+            <a href="../Website.html" class="btn btn--text" target="_blank" rel="noopener">
+              <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+              Resume
+            </a>
+          </div>
+
+          <ul class="hero__social" aria-label="Social links">
+            <li><a href="https://github.com/divyajeetswami5-tech" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a></li>
+            <li><a href="https://linkedin.com/in/divyajeet-swami" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a></li>
+            <li><a href="mailto:divyajeetswami5@gmail.com" aria-label="Email"><i class="fa-regular fa-envelope" aria-hidden="true"></i></a></li>
+            <li><a href="tel:+916375321621" aria-label="Phone"><i class="fa-solid fa-phone" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal" aria-hidden="true">
+          <div class="profile-card">
+            <div class="profile-card__inner">
+              <div class="profile-card__avatar">
+                <span>DS</span>
+              </div>
+              <div class="profile-card__name">Divyajeet Swami</div>
+              <div class="profile-card__role">IT Engineer · Data Science</div>
+              <div class="profile-card__meta">
+                <span><i class="fa-solid fa-location-dot"></i> Jaipur, India</span>
+                <span><i class="fa-solid fa-graduation-cap"></i> B.Tech IT</span>
+              </div>
+              <div class="profile-card__stack">
+                <span class="stack-pill">Python</span>
+                <span class="stack-pill">Pandas</span>
+                <span class="stack-pill">Linux</span>
+                <span class="stack-pill">Web</span>
+              </div>
+            </div>
+            <div class="profile-card__float profile-card__float--1">
+              <i class="fa-brands fa-python"></i>
+              <div><strong>Python</strong><small>Core Language</small></div>
+            </div>
+            <div class="profile-card__float profile-card__float--2">
+              <i class="fa-solid fa-chart-line"></i>
+              <div><strong>Data Science</strong><small>ML / Analytics</small></div>
+            </div>
+            <div class="profile-card__float profile-card__float--3">
+              <i class="fa-brands fa-redhat"></i>
+              <div><strong>RHCSA</strong><small>Certified</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll" aria-label="Scroll to about section">
+        <span class="mouse"><span class="wheel"></span></span>
+        <span class="hero__scroll-text">Scroll</span>
+      </a>
+    </section>
+
+    <!-- About -->
+    <section class="section about" id="about">
+      <div class="container">
+        <header class="section__header reveal">
+          <span class="section__sub">About Me</span>
+          <h2 class="section__title">Get to <span class="text-gradient">know me</span></h2>
+          <p class="section__lead">A brief introduction to who I am and what I do.</p>
+        </header>
+
+        <div class="about__grid">
+          <div class="about__copy reveal">
+            <h3>Building reliable, user-centric solutions.</h3>
+            <p>
+              I'm an Information Technology undergraduate at Arya College of Engineering &amp; IT, Jaipur. I focus on data analysis, predictive modeling, and clean front-end engineering, with a growing interest in machine learning fundamentals.
+            </p>
+            <p>
+              I'm RHCSA certified and enjoy working close to the system, whether that's tuning Linux environments, writing Python pipelines, or shipping responsive interfaces with strong UX principles.
+            </p>
+
+            <div class="about__info">
+              <div class="info-item"><i class="fa-solid fa-user"></i><div><strong>Name</strong><span>Divyajeet Swami</span></div></div>
+              <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><strong>Location</strong><span>Jaipur, Rajasthan</span></div></div>
+              <div class="info-item"><i class="fa-regular fa-envelope"></i><div><strong>Email</strong><span>divyajeetswami5@gmail.com</span></div></div>
+              <div class="info-item"><i class="fa-solid fa-phone"></i><div><strong>Phone</strong><span>+91 63753 21621</span></div></div>
+              <div class="info-item"><i class="fa-solid fa-graduation-cap"></i><div><strong>Degree</strong><span>B.Tech IT (2023-2027)</span></div></div>
+              <div class="info-item"><i class="fa-solid fa-circle-check"></i><div><strong>Status</strong><span>Open to Internships</span></div></div>
+            </div>
+
+            <a href="#contact" class="btn btn--primary"><i class="fa-regular fa-comments"></i> Let's Talk</a>
+          </div>
+
+          <div class="about__stats reveal">
+            <div class="stat">
+              <div class="stat__num" data-count="6">0</div>
+              <div class="stat__label">Semesters Done</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num" data-count="4">0</div>
+              <div class="stat__label">Major Projects</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num" data-count="15">0</div>
+              <div class="stat__label">Technologies</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num" data-count="2">0</div>
+              <div class="stat__label">Certifications</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section skills" id="skills">
+      <div class="container">
+        <header class="section__header reveal">
+          <span class="section__sub">Skills &amp; Stack</span>
+          <h2 class="section__title">What I work <span class="text-gradient">with</span></h2>
+          <p class="section__lead">Tools and technologies I use to build, analyze, and ship.</p>
+        </header>
+
+        <div class="skills__grid">
+          <article class="skill-card reveal">
+            <div class="skill-card__icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <h3>Data Science</h3>
+            <p>Cleaning, exploring, and modeling data to surface insight and forecast outcomes.</p>
+            <div class="skill-bar"><div class="skill-bar__fill" data-progress="85"></div></div>
+            <div class="skill-meta"><span>Proficient</span><span>85%</span></div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__icon"><i class="fa-brands fa-python"></i></div>
+            <h3>Python</h3>
+            <p>Pandas, NumPy, Scikit-learn for analytics and ML workflows. Clean, idiomatic code.</p>
+            <div class="skill-bar"><div class="skill-bar__fill" data-progress="90"></div></div>
+            <div class="skill-meta"><span>Advanced</span><span>90%</span></div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__icon"><i class="fa-solid fa-code"></i></div>
+            <h3>Frontend Web</h3>
+            <p>HTML5, CSS3, JavaScript. Responsive layouts, accessibility, and performance focus.</p>
+            <div class="skill-bar"><div class="skill-bar__fill" data-progress="85"></div></div>
+            <div class="skill-meta"><span>Proficient</span><span>85%</span></div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__icon"><i class="fa-brands fa-linux"></i></div>
+            <h3>Linux &amp; Bash</h3>
+            <p>RHCSA certified. Comfortable with shell scripting, services, users, and storage.</p>
+            <div class="skill-bar"><div class="skill-bar__fill" data-progress="80"></div></div>
+            <div class="skill-meta"><span>Certified</span><span>80%</span></div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__icon"><i class="fa-solid fa-microchip"></i></div>
+            <h3>C / C++ &amp; DSA</h3>
+            <p>Strong foundation in data structures, algorithms, and systems-level programming.</p>
+            <div class="skill-bar"><div class="skill-bar__fill" data-progress="78"></div></div>
+            <div class="skill-meta"><span>Solid</span><span>78%</span></div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__icon"><i class="fa-solid fa-brain"></i></div>
+            <h3>AI / ML Fundamentals</h3>
+            <p>Regression, classification, evaluation, and the mindset to learn deeper architectures.</p>
+            <div class="skill-bar"><div class="skill-bar__fill" data-progress="72"></div></div>
+            <div class="skill-meta"><span>Growing</span><span>72%</span></div>
+          </article>
+        </div>
+
+        <div class="tech-stack reveal">
+          <h3 class="tech-stack__title">Tech Stack</h3>
+          <div class="tech-stack__grid">
+            <div class="tech-pill"><i class="fa-brands fa-python"></i><span>Python</span></div>
+            <div class="tech-pill"><i class="fa-solid fa-table-list"></i><span>Pandas</span></div>
+            <div class="tech-pill"><i class="fa-solid fa-square-root-variable"></i><span>NumPy</span></div>
+            <div class="tech-pill"><i class="fa-solid fa-robot"></i><span>Scikit-learn</span></div>
+            <div class="tech-pill"><i class="fa-brands fa-html5"></i><span>HTML5</span></div>
+            <div class="tech-pill"><i class="fa-brands fa-css3-alt"></i><span>CSS3</span></div>
+            <div class="tech-pill"><i class="fa-brands fa-js"></i><span>JavaScript</span></div>
+            <div class="tech-pill"><i class="fa-solid fa-c"></i><span>C / C++</span></div>
+            <div class="tech-pill"><i class="fa-brands fa-linux"></i><span>Linux</span></div>
+            <div class="tech-pill"><i class="fa-brands fa-git-alt"></i><span>Git</span></div>
+            <div class="tech-pill"><i class="fa-solid fa-terminal"></i><span>Bash</span></div>
+            <div class="tech-pill"><i class="fa-brands fa-redhat"></i><span>RHCSA</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolkit: orbiting spheres, hover for details -->
+    <section class="section toolkit" id="toolkit">
+      <div class="container">
+        <header class="section__header reveal">
+          <span class="section__sub">Toolkit</span>
+          <h2 class="section__title">Tools I work <span class="text-gradient">with</span></h2>
+          <p class="section__lead">Each sphere is a tool I use day to day. Hover one to see how it fits into my workflow.</p>
+        </header>
+
+        <div class="orbit reveal" id="orbit" aria-label="Interactive toolkit constellation">
+          <div class="orbit__core">
+            <div class="orbit__core-inner">
+              <span class="orbit__core-label">Hover</span>
+              <span class="orbit__core-sub">a tool</span>
+            </div>
+          </div>
+
+          <!-- 12 tool spheres. data-tool drives the detail card -->
+          <button class="sphere s-python" data-tool="python" aria-label="Python">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-python"></i>
+            <span class="sphere__name">Python</span>
+          </button>
+          <button class="sphere s-pandas" data-tool="pandas" aria-label="Pandas">
+            <span class="sphere__glow"></span>
+            <i class="fa-solid fa-table-list"></i>
+            <span class="sphere__name">Pandas</span>
+          </button>
+          <button class="sphere s-numpy" data-tool="numpy" aria-label="NumPy">
+            <span class="sphere__glow"></span>
+            <i class="fa-solid fa-square-root-variable"></i>
+            <span class="sphere__name">NumPy</span>
+          </button>
+          <button class="sphere s-sklearn" data-tool="sklearn" aria-label="Scikit-learn">
+            <span class="sphere__glow"></span>
+            <i class="fa-solid fa-robot"></i>
+            <span class="sphere__name">Scikit-learn</span>
+          </button>
+          <button class="sphere s-js" data-tool="js" aria-label="JavaScript">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-js"></i>
+            <span class="sphere__name">JavaScript</span>
+          </button>
+          <button class="sphere s-html" data-tool="html" aria-label="HTML5">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-html5"></i>
+            <span class="sphere__name">HTML5</span>
+          </button>
+          <button class="sphere s-css" data-tool="css" aria-label="CSS3">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-css3-alt"></i>
+            <span class="sphere__name">CSS3</span>
+          </button>
+          <button class="sphere s-c" data-tool="c" aria-label="C and C++">
+            <span class="sphere__glow"></span>
+            <i class="fa-solid fa-c"></i>
+            <span class="sphere__name">C / C++</span>
+          </button>
+          <button class="sphere s-linux" data-tool="linux" aria-label="Linux">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-linux"></i>
+            <span class="sphere__name">Linux</span>
+          </button>
+          <button class="sphere s-git" data-tool="git" aria-label="Git">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-git-alt"></i>
+            <span class="sphere__name">Git</span>
+          </button>
+          <button class="sphere s-bash" data-tool="bash" aria-label="Bash">
+            <span class="sphere__glow"></span>
+            <i class="fa-solid fa-terminal"></i>
+            <span class="sphere__name">Bash</span>
+          </button>
+          <button class="sphere s-rhcsa" data-tool="rhcsa" aria-label="RHCSA">
+            <span class="sphere__glow"></span>
+            <i class="fa-brands fa-redhat"></i>
+            <span class="sphere__name">RHCSA</span>
+          </button>
+
+          <!-- Detail card revealed on hover -->
+          <div class="detail" id="toolDetail" aria-live="polite">
+            <div class="detail__inner">
+              <div class="detail__icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+              <div class="detail__name">Hover a sphere</div>
+              <div class="detail__role">Reveal what each tool does in my stack</div>
+              <ul class="detail__points">
+                <li><i class="fa-solid fa-circle-dot"></i> Move your pointer over any orbiting sphere.</li>
+                <li><i class="fa-solid fa-circle-dot"></i> The constellation gently follows you.</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Tap on touch devices to see details.</li>
+              </ul>
+              <div class="detail__meta">
+                <span class="detail__pill">Interactive</span>
+                <span class="detail__pill">Real workflow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section projects projects--cinematic" id="projects">
+      <div class="container">
+        <header class="section__header reveal">
+          <span class="section__sub">Selected Work</span>
+          <h2 class="section__title">Featured <span class="text-gradient">projects</span></h2>
+          <p class="section__lead">Scroll to ride through projects. Each panel locks into view.</p>
+        </header>
+      </div>
+
+      <!-- Pinned horizontal scroll showcase -->
+      <div class="cine" id="cine">
+        <div class="cine__sticky">
+          <div class="cine__hud">
+            <div class="cine__count"><span id="cineIndex">01</span> / <span id="cineTotal">04</span></div>
+            <div class="cine__progress"><div class="cine__progress-bar" id="cineBar"></div></div>
+            <div class="cine__hint">scroll →</div>
+          </div>
+          <div class="cine__track" id="cineTrack">
+            <article class="cine__panel" data-category="data">
+              <div class="cine__num">01</div>
+              <div class="cine__art">
+                <div class="cine__viz cine__viz--stocks">
+                  <svg viewBox="0 0 600 320" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="gStocks" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#e7b16a" stop-opacity="0.55"/>
+                        <stop offset="100%" stop-color="#e7b16a" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,240 C60,210 120,260 180,200 S320,120 380,160 460,210 540,90 600,140 600,140 L600,320 L0,320 Z" fill="url(#gStocks)"/>
+                    <path d="M0,240 C60,210 120,260 180,200 S320,120 380,160 460,210 540,90 600,140" fill="none" stroke="#b85c3a" stroke-width="2.5"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="cine__copy">
+                <span class="cine__tag">Data Science</span>
+                <h3>Stock Prediction Model</h3>
+                <p>Regression-based forecasting of stock trends from historical market data. End-to-end EDA, feature prep, and decision-focused visualization.</p>
+                <ul class="cine__stack">
+                  <li>Python</li><li>Pandas</li><li>NumPy</li><li>Matplotlib</li>
+                </ul>
+                <div class="cine__cta">
+                  <a href="#" class="btn btn--primary btn--sm" data-cursor="Open"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+                  <a href="#" class="btn btn--ghost btn--sm" data-cursor="Code"><i class="fa-brands fa-github"></i> Source</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="cine__panel" data-category="web">
+              <div class="cine__num">02</div>
+              <div class="cine__art">
+                <div class="cine__viz cine__viz--web">
+                  <div class="mock-browser">
+                    <div class="mock-browser__bar"><span></span><span></span><span></span></div>
+                    <div class="mock-browser__body">
+                      <div class="mock-browser__line w-7"></div>
+                      <div class="mock-browser__line w-5"></div>
+                      <div class="mock-browser__grid">
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cine__copy">
+                <span class="cine__tag">Web</span>
+                <h3>Portfolio Website</h3>
+                <p>Responsive, modern portfolio with a performance-first front-end architecture, clean component structure, and cross-device compatibility.</p>
+                <ul class="cine__stack">
+                  <li>HTML5</li><li>CSS3</li><li>JavaScript</li>
+                </ul>
+                <div class="cine__cta">
+                  <a href="#" class="btn btn--primary btn--sm" data-cursor="Open"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+                  <a href="#" class="btn btn--ghost btn--sm" data-cursor="Code"><i class="fa-brands fa-github"></i> Source</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="cine__panel" data-category="app">
+              <div class="cine__num">03</div>
+              <div class="cine__art">
+                <div class="cine__viz cine__viz--fitness">
+                  <div class="ring">
+                    <svg viewBox="0 0 120 120">
+                      <circle cx="60" cy="60" r="48" stroke="rgba(255,255,255,0.08)" stroke-width="10" fill="none"/>
+                      <circle class="ring__progress" cx="60" cy="60" r="48" stroke="url(#gRing)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="80" transform="rotate(-90 60 60)"/>
+                      <defs>
+                        <linearGradient id="gRing" x1="0" x2="1">
+                          <stop offset="0%" stop-color="#e7b16a"/>
+                          <stop offset="100%" stop-color="#b85c3a"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <div class="ring__label"><strong>73%</strong><small>weekly goal</small></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cine__copy">
+                <span class="cine__tag">Application</span>
+                <h3>Fitness Tracker</h3>
+                <p>App to log workouts and track progress with persistent data and an intuitive interface.</p>
+                <ul class="cine__stack">
+                  <li>Python</li><li>JavaScript</li><li>HTML/CSS</li>
+                </ul>
+                <div class="cine__cta">
+                  <a href="#" class="btn btn--primary btn--sm" data-cursor="Open"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+                  <a href="#" class="btn btn--ghost btn--sm" data-cursor="Code"><i class="fa-brands fa-github"></i> Source</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="cine__panel" data-category="data">
+              <div class="cine__num">04</div>
+              <div class="cine__art">
+                <div class="cine__viz cine__viz--terrain">
+                  <div class="terrain"></div>
+                </div>
+              </div>
+              <div class="cine__copy">
+                <span class="cine__tag">Data Science</span>
+                <h3>DTM - Drainage Network Analysis</h3>
+                <p>Digital Terrain Model simulating drainage flow paths over 1,000+ elevation points. Visualization-driven evaluation of network behavior.</p>
+                <ul class="cine__stack">
+                  <li>Python</li><li>Geospatial</li><li>Analysis</li>
+                </ul>
+                <div class="cine__cta">
+                  <a href="#" class="btn btn--primary btn--sm" data-cursor="Open"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+                  <a href="#" class="btn btn--ghost btn--sm" data-cursor="Code"><i class="fa-brands fa-github"></i> Source</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section class="section education" id="education">
+      <div class="container">
+        <header class="section__header reveal">
+          <span class="section__sub">Education &amp; Credentials</span>
+          <h2 class="section__title">Academic <span class="text-gradient">journey</span></h2>
+          <p class="section__lead">Where I've learned and what I've earned along the way.</p>
+        </header>
+
+        <div class="education__grid">
+          <div class="timeline reveal">
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <div class="timeline__date">2023 - 2027</div>
+                <h3>B.Tech in Information Technology</h3>
+                <p class="timeline__sub">Arya College of Engineering &amp; IT, Jaipur</p>
+                <p>Currently pursuing</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <div class="timeline__date">2023</div>
+                <h3>Higher Secondary (Class 12th)</h3>
+                <p class="timeline__sub">GR Global Academy, Jaipur</p>
+                <p>Result: <strong>75%</strong></p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <div class="timeline__date">2021</div>
+                <h3>Secondary School (Class 10th)</h3>
+                <p class="timeline__sub">GR Global Academy, Jaipur</p>
+                <p>Result: <strong>75%</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="cert-list reveal">
+            <h3 class="cert-list__title"><i class="fa-solid fa-certificate"></i> Certifications</h3>
+            <ul>
+              <li class="cert-item">
+                <div class="cert-item__icon"><i class="fa-brands fa-redhat"></i></div>
+                <div>
+                  <strong>RHCSA</strong>
+                  <span>Red Hat Certified System Administrator</span>
+                </div>
+              </li>
+              <li class="cert-item">
+                <div class="cert-item__icon"><i class="fa-brands fa-python"></i></div>
+                <div>
+                  <strong>Python Certification</strong>
+                  <span>HackerRank</span>
+                </div>
+              </li>
+            </ul>
+
+            <h3 class="cert-list__title cert-list__title--mt"><i class="fa-solid fa-bolt-lightning"></i> Strengths</h3>
+            <ul class="strengths">
+              <li><i class="fa-solid fa-check"></i> Problem solving and analytical thinking</li>
+              <li><i class="fa-solid fa-check"></i> Clean, maintainable coding practices</li>
+              <li><i class="fa-solid fa-check"></i> Fast learner with ownership mindset</li>
+              <li><i class="fa-solid fa-check"></i> Communication and team collaboration</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <header class="section__header reveal">
+          <span class="section__sub">Contact</span>
+          <h2 class="section__title">Let's build something <span class="text-gradient">together</span></h2>
+          <p class="section__lead">Open to internships, collaborations, and interesting problems.</p>
+        </header>
+
+        <div class="contact__grid">
+          <div class="contact__info reveal">
+            <a href="mailto:divyajeetswami5@gmail.com" class="contact-item">
+              <div class="contact-item__icon"><i class="fa-regular fa-envelope"></i></div>
+              <div>
+                <strong>Email</strong>
+                <span>divyajeetswami5@gmail.com</span>
+              </div>
+            </a>
+            <a href="tel:+916375321621" class="contact-item">
+              <div class="contact-item__icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <strong>Phone</strong>
+                <span>+91 63753 21621</span>
+              </div>
+            </a>
+            <div class="contact-item">
+              <div class="contact-item__icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <strong>Location</strong>
+                <span>Jaipur, Rajasthan, India</span>
+              </div>
+            </div>
+            <a href="https://linkedin.com/in/divyajeet-swami" target="_blank" rel="noopener" class="contact-item">
+              <div class="contact-item__icon"><i class="fa-brands fa-linkedin-in"></i></div>
+              <div>
+                <strong>LinkedIn</strong>
+                <span>linkedin.com/in/divyajeet-swami</span>
+              </div>
+            </a>
+            <a href="https://github.com/divyajeetswami5-tech" target="_blank" rel="noopener" class="contact-item">
+              <div class="contact-item__icon"><i class="fa-brands fa-github"></i></div>
+              <div>
+                <strong>GitHub</strong>
+                <span>github.com/divyajeetswami5-tech</span>
+              </div>
+            </a>
+          </div>
+
+          <form class="contact__form reveal" id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required autocomplete="email" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full">
+              <i class="fa-regular fa-paper-plane"></i> Send Message
+            </button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="nav__brand-mark">DS</span>
+        <span>Divyajeet Swami</span>
+      </div>
+      <p class="footer__copy">&copy; <span id="year"></span> Divyajeet Swami. Crafted with care.</p>
+      <ul class="footer__social" aria-label="Social links">
+        <li><a href="https://github.com/divyajeetswami5-tech" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a></li>
+        <li><a href="https://linkedin.com/in/divyajeet-swami" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>
+        <li><a href="mailto:divyajeetswami5@gmail.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/interactive.js" defer></script>
+</body>
+</html>
