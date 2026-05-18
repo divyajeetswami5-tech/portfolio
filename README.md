@@ -148,21 +148,18 @@ A walkthrough of each section.
 
 ### Responsive
 
-Audited at 1440 / 834 / 393 widths with no horizontal overflow at any breakpoint.
+Audited at 1440 / 834 / 393 widths with no horizontal overflow at any breakpoint. The mobile interface mirrors the desktop experience: same orbit constellation, same horizontal cinematic projects scroll, just at a smaller scale.
 
 <table>
   <tr>
-    <td align="center" width="34%"><strong>Mobile (393px)</strong></td>
-    <td align="center" width="33%"><strong>Tablet (834px)</strong></td>
-    <td align="center" width="33%"><strong>Desktop (1440px)</strong></td>
+    <td align="center" width="50%"><strong>Tablet (834px)</strong></td>
+    <td align="center" width="50%"><strong>Desktop (1440px)</strong></td>
   </tr>
   <tr>
-    <td><img src="assets/hero-mobile.png" alt="Hero on mobile" width="100%"></td>
     <td><img src="assets/hero-tablet.png" alt="Hero on tablet" width="100%"></td>
     <td><img src="assets/hero-desktop.png" alt="Hero on desktop" width="100%"></td>
   </tr>
   <tr>
-    <td><img src="assets/toolkit-mobile.png" alt="Toolkit on mobile" width="100%"></td>
     <td><img src="assets/toolkit-tablet.png" alt="Toolkit on tablet" width="100%"></td>
     <td><img src="assets/toolkit-desktop.png" alt="Toolkit on desktop" width="100%"></td>
   </tr>

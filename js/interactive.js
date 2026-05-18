@@ -10,6 +10,9 @@
   'use strict';
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  // Slim canvas effects on small screens to keep mobile fast
+  const lightWeight = reduceMotion || isMobile;
 
   /* =========================================================
      1. Cosmic background
@@ -24,7 +27,6 @@
     let stars = [];
     let shootingStars = [];
     let scrollY = window.scrollY;
-    let raf;
 
     const resize = () => {
       const rect = starsCanvas.getBoundingClientRect();
@@ -34,11 +36,13 @@
       starsCanvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const density = Math.min(220, Math.floor((w * h) / 9000));
+      const target = lightWeight ? 80 : 220;
+      const divisor = lightWeight ? 22000 : 9000;
+      const density = Math.min(target, Math.floor((w * h) / divisor));
       stars = Array.from({ length: density }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        z: Math.random() * 1 + 0.2, // depth: parallax + size
+        z: Math.random() * 1 + 0.2,
         r: Math.random() * 1.4 + 0.3,
         tw: Math.random() * Math.PI * 2,
         tws: Math.random() * 0.02 + 0.005
@@ -52,21 +56,22 @@
     const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
 
     const spawnShooting = () => {
-      if (reduceMotion) return;
+      if (reduceMotion || isMobile) return;
       const startY = Math.random() * h * 0.5;
-      const startX = -50;
       const angle = (Math.random() * 20 + 15) * Math.PI / 180;
       shootingStars.push({
-        x: startX, y: startY,
+        x: -50, y: startY,
         vx: Math.cos(angle) * 11,
         vy: Math.sin(angle) * 11,
         life: 1,
         len: 90 + Math.random() * 60
       });
     };
-    let shootingTimer = setInterval(() => {
-      if (Math.random() < 0.65) spawnShooting();
-    }, 4500);
+    if (!lightWeight) {
+      setInterval(() => {
+        if (Math.random() < 0.65) spawnShooting();
+      }, 4500);
+    }
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
@@ -76,8 +81,8 @@
 
       // Stars
       stars.forEach((s) => {
-        s.tw += s.tws;
-        const tw = (Math.sin(s.tw) + 1) / 2; // 0..1
+        if (!lightWeight) s.tw += s.tws;
+        const tw = (Math.sin(s.tw) + 1) / 2;
         const py = s.y - scrollY * 0.05 * s.z;
         const yMod = ((py % h) + h) % h;
         const a = (0.25 + tw * 0.75) * baseAlpha * s.z;
@@ -88,32 +93,51 @@
       });
 
       // Shooting stars
-      for (let i = shootingStars.length - 1; i >= 0; i--) {
-        const s = shootingStars[i];
-        s.x += s.vx;
-        s.y += s.vy;
-        s.life -= 0.012;
+      if (!lightWeight) {
+        for (let i = shootingStars.length - 1; i >= 0; i--) {
+          const s = shootingStars[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.life -= 0.012;
 
-        const tailX = s.x - (s.vx / 11) * s.len;
-        const tailY = s.y - (s.vy / 11) * s.len;
-        const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
-        grad.addColorStop(0, `rgba(${starColor}, 0)`);
-        grad.addColorStop(1, `rgba(${starColor}, ${Math.max(0, s.life) * 0.85})`);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(tailX, tailY);
-        ctx.lineTo(s.x, s.y);
-        ctx.stroke();
+          const tailX = s.x - (s.vx / 11) * s.len;
+          const tailY = s.y - (s.vy / 11) * s.len;
+          const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
+          grad.addColorStop(0, `rgba(${starColor}, 0)`);
+          grad.addColorStop(1, `rgba(${starColor}, ${Math.max(0, s.life) * 0.85})`);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(tailX, tailY);
+          ctx.lineTo(s.x, s.y);
+          ctx.stroke();
 
-        if (s.life <= 0 || s.x > w + 100 || s.y > h + 100) {
-          shootingStars.splice(i, 1);
+          if (s.life <= 0 || s.x > w + 100 || s.y > h + 100) {
+            shootingStars.splice(i, 1);
+          }
         }
       }
 
-      raf = requestAnimationFrame(draw);
+      if (!lightWeight) requestAnimationFrame(draw);
     };
-    draw();
+
+    if (lightWeight) {
+      // Paint once, then only refresh on scroll/resize for cheap parallax
+      let scrollPaintScheduled = false;
+      const requestPaint = () => {
+        if (scrollPaintScheduled) return;
+        scrollPaintScheduled = true;
+        requestAnimationFrame(() => {
+          draw();
+          scrollPaintScheduled = false;
+        });
+      };
+      window.addEventListener('scroll', requestPaint, { passive: true });
+      window.addEventListener('resize', requestPaint);
+      draw();
+    } else {
+      draw();
+    }
   }
 
   // Aurora parallax: react to scroll + mouse
@@ -121,14 +145,12 @@
     let mx = 0, my = 0;
     let scrollT = 0;
 
-    window.addEventListener('mousemove', (e) => {
-      mx = (e.clientX / window.innerWidth - 0.5) * 2;
-      my = (e.clientY / window.innerHeight - 0.5) * 2;
-    }, { passive: true });
-
-    window.addEventListener('scroll', () => {
-      scrollT = window.scrollY;
-    }, { passive: true });
+    if (!isMobile) {
+      window.addEventListener('mousemove', (e) => {
+        mx = (e.clientX / window.innerWidth - 0.5) * 2;
+        my = (e.clientY / window.innerHeight - 0.5) * 2;
+      }, { passive: true });
+    }
 
     const apply = () => {
       auroras.forEach((el, i) => {
@@ -138,16 +160,34 @@
         const rot = scrollT * 0.01 * (i + 1);
         el.style.transform = `translate3d(${sx}px, ${sy}px, 0) rotate(${rot}deg)`;
       });
-      requestAnimationFrame(apply);
     };
-    if (!reduceMotion) requestAnimationFrame(apply);
+
+    if (lightWeight) {
+      // Update only on scroll
+      let scheduled = false;
+      const schedule = () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(() => {
+          scrollT = window.scrollY;
+          apply();
+          scheduled = false;
+        });
+      };
+      window.addEventListener('scroll', schedule, { passive: true });
+      apply();
+    } else {
+      window.addEventListener('scroll', () => { scrollT = window.scrollY; }, { passive: true });
+      const loop = () => { apply(); requestAnimationFrame(loop); };
+      if (!reduceMotion) requestAnimationFrame(loop);
+    }
   }
 
   /* =========================================================
-     2. Hero particle network
+     2. Hero particle network (desktop/tablet only — too heavy on mobile)
      ========================================================= */
   const canvas = document.getElementById('heroParticles');
-  if (canvas && !reduceMotion) {
+  if (canvas && !lightWeight) {
     const ctx = canvas.getContext('2d');
     let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
     const mouse = { x: -1000, y: -1000, active: false };
@@ -481,7 +521,6 @@
     window.addEventListener('resize', measure);
 
     const onScroll = () => {
-      if (window.innerWidth <= 768) return;
       const rect = cine.getBoundingClientRect();
       const total = cine.offsetHeight - window.innerHeight;
       const scrolled = Math.min(Math.max(-rect.top, 0), total);

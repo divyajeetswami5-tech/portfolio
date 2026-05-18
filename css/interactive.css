@@ -423,64 +423,60 @@ main, .footer { position: relative; z-index: 1; }
 .s-bash    { top: 25%;   left: 6.7%;  transform: translate(-50%, -50%); }
 .s-rhcsa   { top: 6.7%;  left: 25%;   transform: translate(-50%, -50%); }
 
-/* Mobile / touch fallback: grid of spheres, no orbit */
+/* Mobile: keep the orbit constellation, just shrink everything */
 @media (max-width: 768px) {
-  .orbit {
-    aspect-ratio: auto;
-    max-width: 100%;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: auto;
-    gap: 14px;
-    place-items: stretch;
-  }
-  .orbit::before, .orbit::after { display: none; }
-  .orbit__core { display: none; }
-  .detail {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    grid-column: 1 / -1;
-    margin-top: 18px;
-    transform: none;
-  }
+  .toolkit { padding: 90px 0; }
+  .orbit { max-width: 460px; padding: 0 8px; }
   .sphere {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    width: 100%;
-    height: auto;
-    min-width: 0;
-    aspect-ratio: 1 / 1;
-    transform: none !important;
+    width: 60px;
+    height: 60px;
   }
-  .sphere:hover,
-  .sphere:focus-visible,
-  .sphere.is-active {
-    transform: scale(1.06) !important;
-  }
-  .sphere i { font-size: 1.4rem; }
+  .sphere i { font-size: 1.15rem; }
   .sphere__name {
-    bottom: 6px;
-    font-size: 0.58rem;
+    bottom: -22px;
+    font-size: 0.6rem;
     letter-spacing: 0.2px;
     opacity: 0.85;
-    white-space: nowrap;
-    max-width: 90%;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
-  .sphere__glow { inset: -10%; filter: blur(10px); }
-  .orbit.has-active .sphere:not(.is-active) {
-    filter: brightness(0.55) saturate(0.7);
-    transform: scale(0.95) !important;
+  .sphere__glow { inset: -16%; filter: blur(12px); }
+
+  /* Bring the floating panels closer in */
+  .detail {
+    width: 50%;
+    max-width: 220px;
   }
+  .detail__inner {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+  .detail__icon { width: 44px; height: 44px; font-size: 1.2rem; }
+  .detail__name { font-size: 1rem; }
+  .detail__role { font-size: 0.78rem; margin-bottom: 12px; }
+  .detail__points { gap: 6px; margin-bottom: 12px; }
+  .detail__points li { font-size: 0.76rem; }
+
+  .orbit__core { width: 32%; max-width: 150px; }
+  .orbit__core-label { font-size: 0.85rem; }
+  .orbit__core-sub { font-size: 0.62rem; letter-spacing: 1.5px; }
 }
 
 @media (max-width: 480px) {
-  .orbit { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-  .detail { grid-column: 1 / -1; }
-  .sphere i { font-size: 1.2rem; }
-  .sphere__name { font-size: 0.55rem; }
+  .toolkit { padding: 70px 0; }
+  .orbit { max-width: 360px; padding: 0 4px; }
+  .sphere { width: 48px; height: 48px; }
+  .sphere i { font-size: 0.95rem; }
+  .sphere__name { font-size: 0.55rem; bottom: -18px; }
+  .detail { width: 56%; max-width: 200px; }
+  .detail__inner { padding: 14px 12px; }
+  .detail__icon { width: 38px; height: 38px; font-size: 1rem; margin-bottom: 8px; }
+  .detail__name { font-size: 0.92rem; }
+  .detail__role { font-size: 0.7rem; margin-bottom: 8px; }
+  .detail__points li { font-size: 0.68rem; line-height: 1.35; }
+  .detail__points li i { margin-top: 6px; }
+  .detail__pill { padding: 4px 8px; font-size: 0.62rem; }
+  .orbit__core { width: 30%; max-width: 110px; }
+  .orbit__core-label { font-size: 0.72rem; }
+  .orbit__core-sub { font-size: 0.55rem; letter-spacing: 1px; }
 }
 
 /* =========================================================
@@ -724,22 +720,31 @@ main, .footer { position: relative; z-index: 1; }
 .cine__cta { display: flex; flex-wrap: wrap; gap: 10px; }
 
 @media (max-width: 768px) {
-  .cine { height: auto; }
-  .cine__sticky { position: relative; height: auto; overflow: visible; }
-  .cine__hud { position: relative; top: 0; padding-bottom: 16px; flex-wrap: wrap; }
-  .cine__track {
-    flex-direction: column;
-    width: 100%;
-    padding: 0 24px;
-    transform: none !important;
-  }
+  /* Keep the cinematic horizontal scroll on mobile, just make panels narrower */
+  .cine { height: 360vh; }
   .cine__panel {
-    flex: 0 0 auto;
-    width: 100%;
-    margin-right: 0;
+    flex: 0 0 86vw;
+    margin-right: 8vw;
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 40px 0;
+    gap: 22px;
+    padding: 36px 0;
   }
-  .cine__num { font-size: 6rem; top: 0; }
+  .cine__num { font-size: clamp(5rem, 22vw, 8rem); top: -6px; }
+  .cine__art { aspect-ratio: 16 / 10; padding: 18px; }
+  .cine__copy h3 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+  .cine__copy p { font-size: 0.92rem; }
+  .cine__hud { top: max(20px, calc(var(--nav-h) + 12px)); padding: 0 16px; gap: 12px; }
+  .cine__progress { flex: 1 1 auto; max-width: 180px; }
+  .cine__hint { display: none; }
+}
+
+@media (max-width: 480px) {
+  .cine { height: 320vh; }
+  .cine__panel {
+    flex: 0 0 90vw;
+    margin-right: 8vw;
+    padding: 28px 0;
+  }
+  .cine__copy h3 { font-size: 1.4rem; }
+  .cine__art { aspect-ratio: 4 / 3; padding: 14px; }
 }
