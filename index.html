@@ -2,11 +2,16 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- viewport-fit=cover lets the page extend under iOS notch/home-bar; CSS uses env(safe-area-inset-*) to stay clear -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Divyajeet Swami - IT Engineer specializing in Data Science, AI/ML, and Web Development. Explore projects, skills, and experience." />
   <meta name="keywords" content="Divyajeet Swami, IT Engineer, Data Science, Machine Learning, Web Developer, Python, Portfolio, Jaipur" />
   <meta name="author" content="Divyajeet Swami" />
-  <meta name="theme-color" content="#0e0d0b" />
+  <!-- Per-scheme theme colors so the iOS status bar matches the active theme -->
+  <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f4ecdf" media="(prefers-color-scheme: light)" />
+  <!-- Hints the UA to render native form controls/scrollbars for both themes (prevents iOS flash) -->
+  <meta name="color-scheme" content="dark light" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Divyajeet Swami | IT Engineer & Data Science Enthusiast" />
@@ -14,6 +19,11 @@
   <meta property="og:type" content="website" />
 
   <title>Divyajeet Swami | IT Engineer &amp; Data Science Enthusiast</title>
+
+  <!-- Branded favicon + home-screen icon (matches the "DS" saffron mark) -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/favicon.svg" />
+  <link rel="mask-icon" href="assets/favicon.svg" color="#e7b16a" />
 
   <!-- Resource hints for faster mobile load -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -680,6 +690,11 @@
             <div class="form-group">
               <label for="message">Message</label>
               <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <!-- Honeypot: hidden from humans, bots tend to fill it. Server rejects if present. -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
             </div>
             <button type="submit" class="btn btn--primary btn--full">
               <i class="fa-regular fa-paper-plane"></i> Send Message

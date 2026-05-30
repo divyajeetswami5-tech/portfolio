@@ -114,16 +114,19 @@ main, .footer { position: relative; z-index: 1; }
    3. Toolkit constellation
    ========================================================= */
 .toolkit {
-  padding: 130px 0;
+  /* Mobile-first base: fluid vertical padding scales 70px→130px with viewport */
+  padding: clamp(70px, 12vw, 130px) 0;
   overflow: hidden; /* contain sphere glow halos at edges */
 }
 
 .orbit {
   position: relative;
   width: 100%;
-  max-width: 720px;
+  /* Fluid constellation size replaces the old max-width breakpoints */
+  max-width: clamp(360px, 88vw, 720px);
   aspect-ratio: 1 / 1;
   margin: 0 auto;
+  padding: 0 4px;
   display: grid;
   place-items: center;
 }
@@ -161,8 +164,8 @@ main, .footer { position: relative; z-index: 1; }
 /* Center "core" */
 .orbit__core {
   position: absolute;
-  width: 38%;
-  max-width: 240px;
+  width: clamp(30%, 36%, 38%);
+  max-width: clamp(110px, 30vw, 240px);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   display: grid;
@@ -198,13 +201,13 @@ main, .footer { position: relative; z-index: 1; }
 }
 .orbit__core-label {
   display: block;
-  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(0.72rem, 2vw, 1.4rem);
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 .orbit__core-sub {
   display: block;
-  font-size: 0.78rem;
+  font-size: clamp(0.55rem, 1.5vw, 0.78rem);
   font-weight: 500;
   opacity: 0.82;
   letter-spacing: 2px;
@@ -215,8 +218,9 @@ main, .footer { position: relative; z-index: 1; }
 /* Detail card overlays the core when a sphere is hovered */
 .detail {
   position: absolute;
-  width: 64%;
-  max-width: 380px;
+  /* Fluid width replaces the old 768/480 max-width overrides */
+  width: clamp(50%, 60%, 64%);
+  max-width: clamp(200px, 60vw, 380px);
   z-index: 3;
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -227,7 +231,7 @@ main, .footer { position: relative; z-index: 1; }
   background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-xl);
-  padding: 26px 24px;
+  padding: clamp(14px, 3vw, 26px) clamp(12px, 2.5vw, 24px);
   text-align: center;
   box-shadow: var(--shadow-lg);
   backdrop-filter: blur(20px);
@@ -244,26 +248,26 @@ main, .footer { position: relative; z-index: 1; }
   pointer-events: none;
 }
 .detail__icon {
-  width: 56px;
-  height: 56px;
+  width: clamp(38px, 8vw, 56px);
+  height: clamp(38px, 8vw, 56px);
   margin: 0 auto 12px;
   border-radius: 16px;
   display: grid;
   place-items: center;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   color: #fff;
   background: var(--tool-color, var(--brand-grad));
   box-shadow: 0 12px 30px color-mix(in srgb, var(--tool-color, var(--brand)) 40%, transparent);
   transition: background 0.35s ease, box-shadow 0.35s ease;
 }
 .detail__name {
-  font-size: 1.25rem;
+  font-size: clamp(0.92rem, 2.5vw, 1.25rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   margin-bottom: 4px;
 }
 .detail__role {
-  font-size: 0.86rem;
+  font-size: clamp(0.7rem, 2vw, 0.86rem);
   color: var(--text-muted);
   margin-bottom: 16px;
   font-weight: 500;
@@ -278,7 +282,7 @@ main, .footer { position: relative; z-index: 1; }
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  font-size: 0.85rem;
+  font-size: clamp(0.68rem, 2vw, 0.85rem);
   color: var(--text-soft);
   line-height: 1.5;
 }
@@ -309,8 +313,9 @@ main, .footer { position: relative; z-index: 1; }
   --tool-color: var(--brand);
   --tool-color-2: var(--brand-2);
   position: absolute;
-  width: 88px;
-  height: 88px;
+  /* Fluid sphere size scales 48px(phone) -> 88px(desktop), replacing breakpoints */
+  width: clamp(48px, 11.5vw, 88px);
+  height: clamp(48px, 11.5vw, 88px);
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -332,7 +337,7 @@ main, .footer { position: relative; z-index: 1; }
   z-index: 1;
 }
 .sphere i {
-  font-size: 1.75rem;
+  font-size: clamp(0.95rem, 3vw, 1.75rem);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
   transition: transform 0.35s ease;
 }
@@ -341,7 +346,7 @@ main, .footer { position: relative; z-index: 1; }
   bottom: -28px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.72rem;
+  font-size: clamp(0.55rem, 1.6vw, 0.72rem);
   font-weight: 600;
   letter-spacing: 0.4px;
   color: var(--text-soft);
@@ -352,13 +357,20 @@ main, .footer { position: relative; z-index: 1; }
 }
 .sphere__glow {
   position: absolute;
-  inset: -22%;
+  /* Mobile-first: tighter halo + lighter blur for crisp small spheres.
+     Expanded on larger screens via the min-width query below. */
+  inset: -16%;
   border-radius: 50%;
   background: radial-gradient(circle, var(--tool-color) 0%, transparent 60%);
   opacity: 0;
-  filter: blur(18px);
+  filter: blur(12px);
   z-index: -1;
   transition: opacity 0.4s ease;
+}
+/* Sphere labels stay faintly visible on touch screens (no hover) by default */
+.sphere__name { opacity: 0; }
+@media (hover: none) {
+  .sphere__name { opacity: 0.85; }
 }
 
 .sphere:hover,
@@ -423,60 +435,12 @@ main, .footer { position: relative; z-index: 1; }
 .s-bash    { top: 25%;   left: 6.7%;  transform: translate(-50%, -50%); }
 .s-rhcsa   { top: 6.7%;  left: 25%;   transform: translate(-50%, -50%); }
 
-/* Mobile: keep the orbit constellation, just shrink everything */
-@media (max-width: 768px) {
-  .toolkit { padding: 90px 0; }
-  .orbit { max-width: 460px; padding: 0 8px; }
-  .sphere {
-    width: 60px;
-    height: 60px;
-  }
-  .sphere i { font-size: 1.15rem; }
-  .sphere__name {
-    bottom: -22px;
-    font-size: 0.6rem;
-    letter-spacing: 0.2px;
-    opacity: 0.85;
-  }
-  .sphere__glow { inset: -16%; filter: blur(12px); }
-
-  /* Bring the floating panels closer in */
-  .detail {
-    width: 50%;
-    max-width: 220px;
-  }
-  .detail__inner {
-    padding: 18px 16px;
-    border-radius: 18px;
-  }
-  .detail__icon { width: 44px; height: 44px; font-size: 1.2rem; }
-  .detail__name { font-size: 1rem; }
-  .detail__role { font-size: 0.78rem; margin-bottom: 12px; }
-  .detail__points { gap: 6px; margin-bottom: 12px; }
-  .detail__points li { font-size: 0.76rem; }
-
-  .orbit__core { width: 32%; max-width: 150px; }
-  .orbit__core-label { font-size: 0.85rem; }
-  .orbit__core-sub { font-size: 0.62rem; letter-spacing: 1.5px; }
-}
-
-@media (max-width: 480px) {
-  .toolkit { padding: 70px 0; }
-  .orbit { max-width: 360px; padding: 0 4px; }
-  .sphere { width: 48px; height: 48px; }
-  .sphere i { font-size: 0.95rem; }
-  .sphere__name { font-size: 0.55rem; bottom: -18px; }
-  .detail { width: 56%; max-width: 200px; }
-  .detail__inner { padding: 14px 12px; }
-  .detail__icon { width: 38px; height: 38px; font-size: 1rem; margin-bottom: 8px; }
-  .detail__name { font-size: 0.92rem; }
-  .detail__role { font-size: 0.7rem; margin-bottom: 8px; }
-  .detail__points li { font-size: 0.68rem; line-height: 1.35; }
-  .detail__points li i { margin-top: 6px; }
-  .detail__pill { padding: 4px 8px; font-size: 0.62rem; }
-  .orbit__core { width: 30%; max-width: 110px; }
-  .orbit__core-label { font-size: 0.72rem; }
-  .orbit__core-sub { font-size: 0.55rem; letter-spacing: 1px; }
+/* Mobile sizing for the orbit constellation is now handled fluidly via
+   clamp() on .orbit, .sphere, .detail and .orbit__core above — no
+   max-width breakpoints needed. On larger screens we expand the sphere
+   glow halo for a softer, more dramatic bloom. */
+@media (min-width: 768px) {
+  .sphere__glow { inset: -22%; filter: blur(18px); }
 }
 
 /* =========================================================
@@ -486,7 +450,8 @@ main, .footer { position: relative; z-index: 1; }
 
 .cine {
   position: relative;
-  height: 400vh;
+  /* Mobile-first base scroll length; lengthened on larger screens below */
+  height: 320vh;
 }
 .cine__sticky {
   position: sticky;
@@ -498,15 +463,16 @@ main, .footer { position: relative; z-index: 1; }
 
 .cine__hud {
   position: absolute;
-  top: max(28px, calc(var(--nav-h) + 16px));
+  top: max(20px, calc(var(--nav-h) + 12px));
   left: 0;
   right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  /* Mobile-first base; widened gaps at >=769px */
+  gap: 12px;
   z-index: 5;
-  padding: 0 24px;
+  padding: 0 16px;
   pointer-events: none;
 }
 .cine__count {
@@ -518,7 +484,8 @@ main, .footer { position: relative; z-index: 1; }
 }
 .cine__count span { color: var(--text); }
 .cine__progress {
-  flex: 0 1 320px;
+  flex: 1 1 auto;
+  max-width: 180px;
   height: 2px;
   background: var(--border-strong);
   border-radius: 2px;
@@ -531,6 +498,8 @@ main, .footer { position: relative; z-index: 1; }
   transition: width 0.05s linear;
 }
 .cine__hint {
+  /* Hidden on phones (no room); shown at >=769px */
+  display: none;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.72rem;
   color: var(--text-muted);
@@ -543,29 +512,31 @@ main, .footer { position: relative; z-index: 1; }
   height: 100%;
   width: max-content;
   align-items: center;
-  padding: 0 6vw;
+  /* Mobile-first edge padding; widened at >=769px */
+  padding: 0 8vw;
   will-change: transform;
 }
 
 .cine__panel {
-  flex: 0 0 80vw;
+  flex: 0 0 90vw;
   max-width: 1080px;
-  min-width: 320px;
-  margin-right: 6vw;
+  min-width: 280px;
+  margin-right: 8vw;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 40px;
+  /* Mobile-first: single column; becomes 2-col at >=769px */
+  grid-template-columns: 1fr;
+  gap: 22px;
   align-items: center;
   position: relative;
-  padding: 60px 0;
+  padding: 28px 0;
 }
 .cine__panel:last-child { margin-right: 0; }
 
 .cine__num {
   position: absolute;
-  top: -10px;
+  top: -6px;
   left: -10px;
-  font-size: clamp(7rem, 18vw, 14rem);
+  font-size: clamp(5rem, 18vw, 14rem);
   font-weight: 900;
   line-height: 0.85;
   color: transparent;
@@ -581,10 +552,11 @@ main, .footer { position: relative; z-index: 1; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  /* Fluid padding; aspect ratio set mobile-first then refined at >=769px */
+  padding: clamp(14px, 3vw, 24px);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 4 / 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -719,32 +691,20 @@ main, .footer { position: relative; z-index: 1; }
 }
 .cine__cta { display: flex; flex-wrap: wrap; gap: 10px; }
 
-@media (max-width: 768px) {
-  /* Keep the cinematic horizontal scroll on mobile, just make panels narrower */
-  .cine { height: 360vh; }
+@media (min-width: 769px) {
+  /* Tablet/desktop: longer scroll runway, two-column panels, wider art */
+  .cine { height: 400vh; }
   .cine__panel {
-    flex: 0 0 86vw;
-    margin-right: 8vw;
-    grid-template-columns: 1fr;
-    gap: 22px;
-    padding: 36px 0;
+    flex: 0 0 80vw;
+    margin-right: 6vw;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 40px;
+    padding: 60px 0;
+    min-width: 320px;
   }
-  .cine__num { font-size: clamp(5rem, 22vw, 8rem); top: -6px; }
-  .cine__art { aspect-ratio: 16 / 10; padding: 18px; }
-  .cine__copy h3 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
-  .cine__copy p { font-size: 0.92rem; }
-  .cine__hud { top: max(20px, calc(var(--nav-h) + 12px)); padding: 0 16px; gap: 12px; }
-  .cine__progress { flex: 1 1 auto; max-width: 180px; }
-  .cine__hint { display: none; }
-}
-
-@media (max-width: 480px) {
-  .cine { height: 320vh; }
-  .cine__panel {
-    flex: 0 0 90vw;
-    margin-right: 8vw;
-    padding: 28px 0;
-  }
-  .cine__copy h3 { font-size: 1.4rem; }
-  .cine__art { aspect-ratio: 4 / 3; padding: 14px; }
+  .cine__num { font-size: clamp(7rem, 18vw, 14rem); top: -10px; }
+  .cine__art { aspect-ratio: 16 / 11; padding: 24px; }
+  .cine__hud { top: max(28px, calc(var(--nav-h) + 16px)); padding: 0 24px; gap: 16px; }
+  .cine__progress { flex: 0 1 320px; max-width: none; }
+  .cine__hint { display: block; }
 }
