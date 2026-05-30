@@ -274,47 +274,100 @@
     });
   });
 
-  /* ---------------- Contact form (mailto fallback) ---------------- */
+  /* ---------------- Contact form (API submit + mailto fallback) ---------------- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
 
+  // Where the Express backend lives. Same-origin by default; override by setting
+  // window.API_BASE = 'https://api.your-domain.com' before this script loads.
+  const API_BASE = (window.API_BASE || '').replace(/\/$/, '');
+
   if (form) {
-    form.addEventListener('submit', (e) => {
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    const setStatus = (msg, type) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.className = 'form-status' + (type ? ' is-' + type : '');
+    };
+
+    // Mailto fallback keeps the form working even if the API is unreachable.
+    const mailtoFallback = (name, email, subject, message) => {
+      const body = `Hi Divyajeet,%0D%0A%0D%0A${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${encodeURIComponent(name)} (${encodeURIComponent(email)})`;
+      const mailto = `mailto:divyajeetswami5@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href = mailto;
+      setStatus('Opening your email client...', 'success');
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = new FormData(form);
       const name = (data.get('name') || '').toString().trim();
       const email = (data.get('email') || '').toString().trim();
       const subject = (data.get('subject') || '').toString().trim();
       const message = (data.get('message') || '').toString().trim();
+      const website = (data.get('website') || '').toString().trim(); // honeypot
 
       if (!name || !email || !subject || !message) {
-        if (status) {
-          status.textContent = 'Please fill in all fields.';
-          status.className = 'form-status is-error';
-        }
+        setStatus('Please fill in all fields.', 'error');
         return;
       }
-
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       if (!emailOk) {
-        if (status) {
-          status.textContent = 'Please enter a valid email.';
-          status.className = 'form-status is-error';
-        }
+        setStatus('Please enter a valid email.', 'error');
         return;
       }
 
-      const body = `Hi Divyajeet,%0D%0A%0D%0A${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${encodeURIComponent(name)} (${encodeURIComponent(email)})`;
-      const mailto = `mailto:divyajeetswami5@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-      window.location.href = mailto;
+      // Attempt the API; gracefully fall back to mailto on any failure.
+      setStatus('Sending...', null);
+      if (submitBtn) submitBtn.disabled = true;
 
-      if (status) {
-        status.textContent = 'Opening your email client...';
-        status.className = 'form-status is-success';
+      try {
+        const res = await fetch(`${API_BASE}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message, website })
+        });
+
+        if (res.ok) {
+          setStatus('Message sent. Thanks for reaching out!', 'success');
+          form.reset();
+        } else {
+          const payload = await res.json().catch(() => ({}));
+          if (res.status === 429) {
+            setStatus('Too many messages. Please try again in a minute.', 'error');
+          } else if (payload && payload.error) {
+            setStatus(payload.error, 'error');
+          } else {
+            mailtoFallback(name, email, subject, message);
+          }
+        }
+      } catch (_) {
+        // Network/CORS/offline -> fall back to the user's mail client.
+        mailtoFallback(name, email, subject, message);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
-      form.reset();
     });
   }
+
+  /* ---------------- Image performance helper ----------------
+     The page currently renders its visuals with inline SVG + CSS, so there
+     are no <img> tags to optimize today. This helper future-proofs the site:
+     any <img> added later (or injected by a CMS) automatically gets
+     loading="lazy" + decoding="async" so it never blocks first paint or
+     causes Cumulative Layout Shift. The hero image (if any) is kept eager. */
+  const optimizeImages = (root) => {
+    root.querySelectorAll('img:not([data-eager])').forEach((img, i) => {
+      if (!img.hasAttribute('loading')) img.loading = 'lazy';
+      if (!img.hasAttribute('decoding')) img.decoding = 'async';
+      // Reserve space to prevent CLS when width/height are known but unset.
+      if (img.getAttribute('width') && img.getAttribute('height') && !img.style.aspectRatio) {
+        img.style.aspectRatio = `${img.getAttribute('width')} / ${img.getAttribute('height')}`;
+      }
+    });
+  };
+  optimizeImages(document);
 
   /* ---------------- Subtle parallax on profile card ---------------- */
   const profileCard = document.querySelector('.profile-card__inner');
@@ -331,4 +384,23 @@
       profileCard.style.transform = '';
     });
   }
+
+  /* ---------------- Page-hit beacon (fire-and-forget) ----------------
+     Pings the lightweight counter API after load so it never blocks render.
+     Uses sendBeacon when available (survives page unload, zero main-thread
+     cost) and silently no-ops if the backend isn't running. */
+  const sendHit = () => {
+    const url = `${API_BASE}/api/metrics/hit`;
+    const body = JSON.stringify({ path: location.pathname, ref: document.referrer || null });
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }));
+      } else {
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true })
+          .catch(() => {});
+      }
+    } catch (_) { /* analytics must never break the page */ }
+  };
+  if (document.readyState === 'complete') sendHit();
+  else window.addEventListener('load', sendHit, { once: true });
 })();

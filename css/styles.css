@@ -113,7 +113,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 24px;
+  /* Mobile-first base gutter; widened at >=480px and >=1280px */
+  padding: 0 18px;
 }
 
 .text-gradient {
@@ -151,9 +152,12 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   justify-content: center;
   gap: 8px;
   padding: 14px 26px;
+  /* A11y: guarantee a 44x44px touch target on every button/link (WCAG 2.5.5) */
+  min-height: 44px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.95rem;
+  /* Fluid label size: scales gently between phone and desktop */
+  font-size: clamp(0.9rem, 0.85rem + 0.25vw, 0.95rem);
   letter-spacing: 0.2px;
   cursor: pointer;
   transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
@@ -266,6 +270,9 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   display: flex;
   gap: 6px;
 }
+/* Mobile-first: primary inline nav is hidden until there is room (>=1024px).
+   The hamburger menu carries navigation on phones/tablets. */
+.nav__links { display: none; }
 .nav__link {
   position: relative;
   padding: 10px 14px;
@@ -295,10 +302,13 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   align-items: center;
   gap: 10px;
 }
+/* Mobile-first: "Hire Me" inline CTA is hidden on phones (the mobile menu + footer carry it), revealed at >=1024px */
+.nav__cta { display: none; }
 
 .theme-toggle {
-  width: 40px;
-  height: 40px;
+  /* A11y: 44x44 minimum touch target (WCAG 2.5.5) */
+  width: 44px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -315,13 +325,16 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
+  /* A11y: 44x44 minimum touch target (WCAG 2.5.5) */
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
   background: var(--surface);
   border: 1px solid var(--border);
   padding: 0;
 }
+/* Mobile-first: hamburger + mobile CTA visible by default, hidden at >=1024px */
+.menu-toggle { display: inline-flex; }
 .menu-toggle span {
   display: block;
   width: 18px;
@@ -370,14 +383,16 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 
 /* ---------- Sections ---------- */
 .section {
-  padding: 110px 0;
+  /* Mobile-first base spacing; scaled up via min-width queries below */
+  padding: 72px 0;
   position: relative;
 }
 .section--alt { background: var(--bg-elev); }
 
 .section__header {
   text-align: center;
-  margin-bottom: 60px;
+  /* Fluid header spacing avoids large fixed gaps on small screens */
+  margin-bottom: clamp(40px, 6vw, 60px);
 }
 .section__sub {
   display: inline-block;
@@ -419,6 +434,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 
 .section__lead {
   color: var(--text-muted);
+  font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.05rem);
   max-width: 620px;
   margin: 0 auto;
 }
@@ -426,10 +442,9 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding-top: var(--nav-h);
-  padding-bottom: 60px;
+  /* Mobile-first: let the stacked hero size to its content; full-viewport height added at >=1024px */
+  padding-top: calc(var(--nav-h) + 16px);
+  padding-bottom: 48px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -467,8 +482,9 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 60px;
+  /* Mobile-first: single column stack; becomes 2-col at >=1024px */
+  grid-template-columns: 1fr;
+  gap: 32px;
   align-items: center;
 }
 
@@ -537,7 +553,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 }
 
 .hero__desc {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1rem);
   color: var(--text-muted);
   max-width: 540px;
   margin-bottom: 32px;
@@ -579,6 +595,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   justify-content: center;
   align-items: center;
   position: relative;
+  /* Mobile-first: visual leads above the copy; reset to source order at >=1024px */
+  order: -1;
 }
 .profile-card {
   position: relative;
@@ -590,7 +608,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
-  padding: 44px 32px;
+  /* Fluid padding so the card never feels cramped on phones */
+  padding: clamp(32px, 5vw, 44px) clamp(22px, 4vw, 32px);
   text-align: center;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
@@ -605,8 +624,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 }
 
 .profile-card__avatar {
-  width: 110px;
-  height: 110px;
+  width: clamp(90px, 20vw, 110px);
+  height: clamp(90px, 20vw, 110px);
   border-radius: 50%;
   background: var(--brand-grad);
   display: flex;
@@ -614,7 +633,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   justify-content: center;
   color: #fff;
   font-weight: 800;
-  font-size: 2.3rem;
+  font-size: clamp(1.9rem, 1.4rem + 2vw, 2.3rem);
   margin: 0 auto 20px;
   box-shadow: 0 14px 36px rgba(231, 177, 106, 0.25);
   position: relative;
@@ -736,8 +755,9 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 /* ---------- About ---------- */
 .about__grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 60px;
+  /* Mobile-first: stacked; 2-col at >=1024px */
+  grid-template-columns: 1fr;
+  gap: 40px;
   align-items: start;
 }
 .about__copy h3 {
@@ -753,7 +773,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 
 .about__info {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* Mobile-first: single column; 2-col at >=560px */
+  grid-template-columns: 1fr;
   gap: 18px;
   margin: 28px 0 32px;
 }
@@ -797,7 +818,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 28px 20px;
+  /* Fluid padding: compact on phones, roomy on desktop */
+  padding: clamp(22px, 4vw, 28px) clamp(14px, 3vw, 20px);
   text-align: center;
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
@@ -807,7 +829,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   box-shadow: var(--shadow-md);
 }
 .stat__num {
-  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  font-size: clamp(2rem, 1.6rem + 2vw, 2.8rem);
   font-weight: 800;
   background: var(--brand-grad);
   -webkit-background-clip: text;
@@ -950,7 +972,9 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   margin-bottom: 40px;
 }
 .filter-btn {
-  padding: 9px 18px;
+  /* A11y: min 44px tap height for mobile filter chips */
+  padding: 11px 18px;
+  min-height: 44px;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
@@ -1079,14 +1103,15 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 /* ---------- Education ---------- */
 .education__grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 50px;
+  /* Mobile-first: stacked; 2-col at >=992px */
+  grid-template-columns: 1fr;
+  gap: 40px;
   align-items: start;
 }
 
 .timeline {
   position: relative;
-  padding-left: 22px;
+  padding-left: clamp(18px, 3vw, 22px);
 }
 .timeline::before {
   content: "";
@@ -1104,7 +1129,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .timeline__item:last-child { padding-bottom: 0; }
 .timeline__dot {
   position: absolute;
-  left: -22px;
+  left: calc(-1 * clamp(18px, 3vw, 22px));
   top: 6px;
   width: 14px;
   height: 14px;
@@ -1205,8 +1230,9 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 }
 .contact__grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 40px;
+  /* Mobile-first: stacked; 2-col at >=992px */
+  grid-template-columns: 1fr;
+  gap: 32px;
   align-items: start;
 }
 .contact__info {
@@ -1252,7 +1278,8 @@ a.contact-item:hover {
 }
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* Mobile-first: stacked fields; side-by-side at >=560px */
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 .form-group {
@@ -1268,11 +1295,15 @@ a.contact-item:hover {
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 12px 14px;
+  /* A11y: comfortable 44px+ tap height on inputs */
+  padding: 13px 14px;
+  min-height: 44px;
   background: var(--bg);
   color: var(--text);
   border: 1px solid var(--border-strong);
   border-radius: 10px;
+  /* 16px font-size prevents iOS Safari auto-zoom on focus */
+  font-size: 16px;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 .form-group input:focus,
@@ -1282,6 +1313,15 @@ a.contact-item:hover {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent);
 }
 .form-group textarea { resize: vertical; min-height: 120px; }
+/* Honeypot anti-spam field: visually & semantically hidden, but not display:none
+   (some bots skip display:none). Real users never see or fill it. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .form-status {
   margin-top: 14px;
   font-size: 0.88rem;
@@ -1319,8 +1359,8 @@ a.contact-item:hover {
   gap: 10px;
 }
 .footer__social a {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1339,8 +1379,10 @@ a.contact-item:hover {
 /* Back to top */
 .back-to-top {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  /* Fluid offsets: tucks tighter into phone corners, roomier on desktop */
+  right: clamp(16px, 3vw, 24px);
+  bottom: clamp(16px, 3vw, 24px);
+  /* A11y: 44x44 minimum touch target (WCAG 2.5.5) */
   width: 46px;
   height: 46px;
   border-radius: 50%;
@@ -1355,6 +1397,9 @@ a.contact-item:hover {
   transform: translateY(10px);
   transition: opacity var(--transition), visibility var(--transition), transform var(--transition);
   z-index: 900;
+  /* Respect iOS safe-area insets so the button never hides under the home bar */
+  margin-right: env(safe-area-inset-right, 0px);
+  margin-bottom: env(safe-area-inset-bottom, 0px);
 }
 .back-to-top.is-visible {
   opacity: 1;
@@ -1364,69 +1409,79 @@ a.contact-item:hover {
 .back-to-top:hover { transform: translateY(-3px); }
 
 /* =========================================================
-   Responsive
+   Responsive — MOBILE-FIRST
+   Base rules above target the smallest viewport. Each min-width
+   query below progressively enhances the layout for larger screens.
    ========================================================= */
 
-@media (max-width: 1024px) {
-  .nav__links { display: none; }
-  .menu-toggle { display: inline-flex; }
-  .nav__cta { display: none; }
+/* ---- Small-screen base overrides (apply to phones by default) ---- */
+.hero__greeting { font-size: clamp(0.74rem, 0.7rem + 0.3vw, 0.85rem); }
+/* Center + constrain the profile card on phones; widened on bigger screens */
+.profile-card { max-width: 320px; margin: 0 auto; }
+/* Floating badges have no room on phones — revealed once we hit >=768px */
+.profile-card__float { display: none; }
+/* Resume text-button is space-saving-hidden on the smallest screens */
+.hero__cta .btn--text { display: none; }
+.hero__cta { gap: 8px; }
 
-  .hero__inner,
-  .about__grid,
-  .education__grid,
-  .contact__grid {
-    grid-template-columns: 1fr;
-    gap: 50px;
-  }
-  .hero__visual { order: -1; }
-  .profile-card { max-width: 360px; margin: 0 auto; }
-  .section { padding: 90px 0; }
+/* ---- >=480px : small tablets / large phones ---- */
+@media (min-width: 480px) {
+  .container { padding: 0 24px; }
+  .section { padding: 84px 0; }
+  .hero__cta .btn--text { display: inline-flex; }
 }
 
-@media (max-width: 768px) {
-  .hero { padding-top: var(--nav-h); padding-bottom: 40px; min-height: auto; }
-  .hero__inner { padding-top: 24px; gap: 32px; }
-  .hero__visual { order: -1; }
-  .profile-card { max-width: 320px; }
-  .hero__cta { gap: 8px; }
-  .btn { padding: 12px 20px; font-size: 0.9rem; }
+/* ---- >=560px : two-up info & form fields ---- */
+@media (min-width: 560px) {
+  .about__info { grid-template-columns: repeat(2, 1fr); }
+  .form-row { grid-template-columns: 1fr 1fr; }
+}
 
-  .about__info { grid-template-columns: 1fr; }
-  .about__stats { grid-template-columns: repeat(2, 1fr); }
+/* ---- >=768px : tablets — reveal floating profile badges, row footer ---- */
+@media (min-width: 768px) {
+  .section { padding: 96px 0; }
+  .profile-card { max-width: 360px; }
+  .contact__form { padding: 32px; }
+  .footer__inner { flex-direction: row; text-align: left; }
 
-  .form-row { grid-template-columns: 1fr; }
-  .contact__form { padding: 24px; }
-
-  .footer__inner { flex-direction: column; text-align: center; }
-
+  .profile-card__float { display: flex; padding: 10px 12px; font-size: 0.78rem; }
+  .profile-card__float i { font-size: 1.1rem; }
   .profile-card__float--1 { left: -10px; }
   .profile-card__float--2 { right: -10px; }
   .profile-card__float--3 { left: -10px; }
-  .profile-card__float { padding: 10px 12px; font-size: 0.78rem; }
-  .profile-card__float i { font-size: 1.1rem; }
 }
 
-@media (max-width: 480px) {
-  .container { padding: 0 18px; }
-  .section { padding: 70px 0; }
-  .section__header { margin-bottom: 40px; }
-  .hero__greeting { font-size: 0.78rem; padding: 6px 12px; }
-  .hero__cta .btn--text { display: none; }
-
-  .stat { padding: 22px 14px; }
-  .stat__num { font-size: 2rem; }
-
-  .profile-card__inner { padding: 32px 22px; }
-  .profile-card__avatar { width: 90px; height: 90px; font-size: 1.9rem; }
-  .profile-card__float { display: none; }
-
-  .timeline { padding-left: 18px; }
-  .timeline__dot { left: -18px; }
-
-  .back-to-top { right: 16px; bottom: 16px; width: 42px; height: 42px; }
+/* ---- >=992px : split Education & Contact into two columns ---- */
+@media (min-width: 992px) {
+  .education__grid { grid-template-columns: 1.4fr 1fr; gap: 50px; }
+  .contact__grid { grid-template-columns: 1fr 1.3fr; gap: 40px; }
+  .profile-card__float { left: -50px; }
+  .profile-card__float--1 { top: 20px; left: -50px; }
+  .profile-card__float--2 { right: -40px; left: auto; }
+  .profile-card__float--3 { left: -30px; }
 }
 
+/* ---- >=1024px : desktop — inline nav, full-height 2-col hero ---- */
+@media (min-width: 1024px) {
+  .nav__links { display: block; }
+  .nav__cta { display: inline-flex; }
+  .menu-toggle { display: none; }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: var(--nav-h);
+    padding-bottom: 60px;
+  }
+  .hero__inner { grid-template-columns: 1.15fr 1fr; gap: 60px; }
+  .hero__visual { order: 0; }
+  .profile-card { max-width: 420px; }
+
+  .about__grid { grid-template-columns: 1.15fr 1fr; gap: 60px; }
+  .section { padding: 110px 0; }
+}
+
+/* ---- >=1280px : widen container gutters on large desktops ---- */
 @media (min-width: 1280px) {
   .container { padding: 0 32px; }
 }
